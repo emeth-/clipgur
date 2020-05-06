@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, dialog, globalShortcut} = require('electron')
 const path = require('path')
 
 function createWindow () {
@@ -29,6 +29,21 @@ app.on('window-all-closed', function () {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') app.quit()
+})
+
+app.on('ready', () => {
+  globalShortcut.register('CommandOrControl+Shift+C', () => {
+    dialog.showMessageBox({
+      type: 'info',
+      message: 'Success!',
+      detail: 'You pressed the registered global shortcut keybinding.',
+      buttons: ['OK']
+    })
+  })
+})
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll()
 })
 
 app.on('activate', function () {
