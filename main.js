@@ -62,6 +62,7 @@ base64_clipimage = base64_clipimage.substring(0, base64_clipimage.length - 1);
 imgur.uploadBase64(base64_clipimage)
     .then(function (json) {
         console.log(json.data.link);
+        clipboard.writeText(json.data.link)
     })
     .catch(function (err) {
         console.error(err.message);
