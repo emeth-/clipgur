@@ -3,11 +3,14 @@
   "version": "0.0.1",
   "description": "Add new shortcut, cmd (or control) + shift + s, which takes screenshot, uploads to imgur, and puts url on your clipboard.",
   "license": "MIT",
+  "author": "TeachThe.Net",
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder",
-    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "source-map-support": "^0.5.16",
@@ -18,5 +21,11 @@
     "electron-builder": "^22.4.1",
     "electron-webpack": "^2.8.2",
     "webpack": "~4.42.1"
+  },
+  "build": {
+      "appId": "com.electron.clipgur",
+      "mac": {
+        "category": "public.app-category.developer-tools"
+      }
   }
 }
