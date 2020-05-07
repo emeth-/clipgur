@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, dialog, globalShortcut} = require('electron')
 const path = require('path')
+const { spawn } = require('child_process');
 
 function createWindow () {
   // Create the browser window.
@@ -33,12 +34,33 @@ app.on('window-all-closed', function () {
 
 app.on('ready', () => {
   globalShortcut.register('CommandOrControl+Shift+C', () => {
+console.log("sb1");
+
+//-ac is desired, but doesn't seem to function
+//-i functions
+//gnome-screenshot -i
+//correction, -ac functions if prefixed with sleep 1 command
+
+const { execSync } = require('child_process');
+execSync('sleep 0.1;gnome-screenshot -ac ', (err, stdout, stderr) => {
+  if (err) {
+    console.error(`exec error: ${err}`);
+    return;
+  }
+
+  console.log(`Number of files ${stdout}`);
+});
+
+console.log("sb2")
+/*
+
     dialog.showMessageBox({
       type: 'info',
       message: 'Success!',
       detail: 'You pressed the registered global shortcut keybinding.',
       buttons: ['OK']
     })
+    */
   })
 })
 
