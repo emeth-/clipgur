@@ -1,7 +1,10 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, dialog, globalShortcut} = require('electron')
+const {app, BrowserWindow, dialog, globalShortcut, clipboard} = require('electron')
 const path = require('path')
 const { spawn } = require('child_process');
+
+var imgur = require('imgur');
+imgur.setClientId('79c0cfb5c8e08ca');
 
 function createWindow () {
   // Create the browser window.
@@ -47,11 +50,23 @@ execSync('sleep 0.1;gnome-screenshot -ac ', (err, stdout, stderr) => {
     console.error(`exec error: ${err}`);
     return;
   }
-
-  console.log(`Number of files ${stdout}`);
 });
 
 console.log("sb2")
+
+var clipimage = clipboard.readImage();
+var base64_clipimage = clipimage.toDataURL();
+base64_clipimage = base64_clipimage.split("base64,")[1];
+base64_clipimage = base64_clipimage.substring(0, base64_clipimage.length - 1);
+
+imgur.uploadBase64(base64_clipimage)
+    .then(function (json) {
+        console.log(json.data.link);
+    })
+    .catch(function (err) {
+        console.error(err.message);
+    });
+
 /*
 
     dialog.showMessageBox({
