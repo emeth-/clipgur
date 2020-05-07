@@ -1,10 +1,17 @@
-const {app, BrowserWindow, dialog, globalShortcut, clipboard, Menu, Tray, nativeImage} = require('electron')
-const path = require('path')
+'use strict'
+
+import { app, BrowserWindow, dialog, globalShortcut, clipboard, Menu, Tray, nativeImage } from 'electron'
+import * as path from 'path'
+import { format as formatUrl } from 'url'
 const { spawn } = require('child_process');
 
 var imgur = require('imgur');
 imgur.setClientId('79c0cfb5c8e08ca');
 
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
+// global reference to mainWindow (necessary to prevent window from being garbage collected)
+let mainWindow
 
 let tray = null
 app.on('ready', () => {
