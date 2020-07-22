@@ -1,3 +1,12 @@
+# clipgur
+
+Adds global shortcuts:
+
+* cmd+shift+c - draw screenshot, uploads to imgur and copies url to your clipboard
+* cmd+shift+m - maximize currently focused window
+
+
+
 # electron-webpack-quick-start
 > A bare minimum project structure to get started developing with [`electron-webpack`](https://github.com/electron-userland/electron-webpack).
 

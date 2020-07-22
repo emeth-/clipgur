@@ -4,6 +4,8 @@ import { app, BrowserWindow, dialog, globalShortcut, clipboard, Menu, Tray, nati
 import * as path from 'path'
 import { format as formatUrl } from 'url'
 const { spawn } = require('child_process');
+const { windowManager } = require("node-window-manager");
+
 
 var imgur = require('imgur');
 imgur.setClientId('79c0cfb5c8e08ca');
@@ -54,6 +56,20 @@ app.on('ready', () => {
         .catch(function (err) {
             console.error(err.message);
         });
+  });
+
+
+  globalShortcut.register('CommandOrControl+Shift+M', () => {
+
+    const window = windowManager.getActiveWindow();
+
+    // This method has to be called on macOS before changing the window's bounds, otherwise it will throw an error.
+    // It will prompt an accessibility permission request dialog, if needed.
+    windowManager.requestAccessibility();
+
+    // Sets the active window's bounds.
+    window.maximize();
+
   });
 
 
