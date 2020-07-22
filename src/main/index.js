@@ -10,6 +10,12 @@ const { windowManager } = require("node-window-manager");
 var imgur = require('imgur');
 imgur.setClientId('79c0cfb5c8e08ca');
 
+if(process.platform == 'darwin') {
+  //OSX
+  app.dock.hide()
+}
+
+
 app.setLoginItemSettings({ openAtLogin: true })
 
 let tray = null
